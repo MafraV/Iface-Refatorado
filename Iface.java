@@ -90,7 +90,6 @@ public class Iface {
         {
             conta = accounts.get(nick);
             int op = 0;
-            boolean correctInput;
             System.out.print("\nWelcome " + conta.getNick() + "!\n\n");
 
             while(op != 14)
