@@ -33,6 +33,29 @@ public class Iface {
         System.out.print("Returning to the Main Menu...\n\n");
     }
 
+    public int readInteger(int x)
+    {
+        boolean correctInput = false;
+
+        while(!correctInput)
+        {
+            try{
+                x = Integer.parseInt(input.nextLine());
+
+
+                correctInput = true;
+            }
+
+            catch(Exception e){
+
+                System.out.print("\nInput isn't a Integer!" + "\n" + "Please, try again:\n\n");
+            }
+        }
+
+        return x;
+    }
+
+
     public void login()
     {
         boolean logged;
@@ -73,34 +96,21 @@ public class Iface {
             while(op != 14)
             {
                 System.out.print("What do you want to do?\n");
-                correctInput = false;
-
-                while(!correctInput)
-                {
-                    try{
-                        System.out.print("1 - Verify Account information;\n");
-                        System.out.print("2 - Change account information;\n");
-                        System.out.print("3 - Add a friend;\n");
-                        System.out.print("4 - Check for friendship requests;\n");
-                        System.out.print("5 - Verify friend list;\n");
-                        System.out.print("6 - Send a message;\n");
-                        System.out.print("7 - Check for messages;\n");
-                        System.out.print("8 - Verify message list;\n");
-                        System.out.print("9 - Create a community;\n");
-                        System.out.print("10 - Join a community;\n");
-                        System.out.print("11 - Manage community;\n");
-                        System.out.print("12 - Verify community list;\n");
-                        System.out.print("13 - Delete account;\n");
-                        System.out.print("14 - Log out.\n");
-                        op = Integer.parseInt(input.nextLine());
-
-                        correctInput = true;
-                    }
-
-                    catch(Exception e){
-                        System.out.print("\nInput isn't a Integer!" + "\n" + "Please, try again:\n\n");
-                    }
-                }
+                System.out.print("1 - Verify Account information;\n");
+                System.out.print("2 - Change account information;\n");
+                System.out.print("3 - Add a friend;\n");
+                System.out.print("4 - Check for friendship requests;\n");
+                System.out.print("5 - Verify friend list;\n");
+                System.out.print("6 - Send a message;\n");
+                System.out.print("7 - Check for messages;\n");
+                System.out.print("8 - Verify message list;\n");
+                System.out.print("9 - Create a community;\n");
+                System.out.print("10 - Join a community;\n");
+                System.out.print("11 - Manage community;\n");
+                System.out.print("12 - Verify community list;\n");
+                System.out.print("13 - Delete account;\n");
+                System.out.print("14 - Log out.\n");
+                op = this.readInteger(op);
 
                 if(op == 1)
                 {
@@ -110,24 +120,11 @@ public class Iface {
                 if(op == 2)
                 {
                     System.out.print("What information do you want to change?\n");
-                    correctInput = false;
                     int op2 = 0;
-
-                    while(!correctInput)
-                    {
-                        try{
-                            System.out.print("1 - Name\n");
-                            System.out.print("2 - Password\n");
-                            System.out.print("3 - Nick Name\n");
-                            op2 = Integer.parseInt(input.nextLine());
-
-                            correctInput = true;
-                        }
-
-                        catch (Exception e){
-                            System.out.print("\nInput isn't a Integer!" + "\n" + "Please, try again:\n\n");
-                        }
-                    }
+                    System.out.print("1 - Name\n");
+                    System.out.print("2 - Password\n");
+                    System.out.print("3 - Nick Name\n");
+                    op2 = this.readInteger(op2);
 
                     if(op2 == 1)
                     {
@@ -202,38 +199,29 @@ public class Iface {
                     ArrayList<String> friend_requests = conta.getRequests();
                     int accept = 1;
 
-                    while(!friend_requests.isEmpty())
+                    if(friend_requests.isEmpty()) System.out.print("\nNo friend requests!\n\n");
+
+                    else
                     {
-                        correctInput = false;
-                        String friendNick = friend_requests.get(0);
-
-                        System.out.print("You have a friend request from " + friendNick + "\n");
-
-                        while(!correctInput)
+                        while(!friend_requests.isEmpty())
                         {
-                            try{
-                                System.out.print("Press 1 to accept or 2 to deny\n");
-                                accept = Integer.parseInt(input.nextLine());
+                            correctInput = false;
+                            String friendNick = friend_requests.get(0);
 
-                                correctInput = true;
+                            System.out.print("You have a friend request from " + friendNick + "\n");
+                            System.out.print("Press 1 to accept or 2 to deny\n");
+                            accept = this.readInteger(accept);
+
+                            friend_requests.remove(0);
+
+                            if(accept == 1)
+                            {
+                                Account friend = accounts.get(friendNick);
+                                conta.addFriend(friend);
+                                friend.addFriend(conta);
                             }
-
-                            catch(Exception e){
-                                System.out.print("\nInput isn't a Integer!" + "\n" + "Please, try again:\n\n");
-                            }
-                        }
-
-                        friend_requests.remove(0);
-
-                        if(accept == 1)
-                        {
-                            Account friend = accounts.get(friendNick);
-                            conta.addFriend(friend);
-                            friend.addFriend(conta);
                         }
                     }
-
-                    if(friend_requests.isEmpty()) System.out.print("\nNo friend requests!\n\n");
                 }
 
                 if(op == 5)
@@ -339,23 +327,13 @@ public class Iface {
                         Community managing = communitys.get(name);
 
                         while (op_manage != 5) {
-                            correctInput = false;
                             System.out.print("What do you want to do?\n\n");
-
-                            while (!correctInput) {
-                                try {
-                                    System.out.print("1 - Add member\n");
-                                    System.out.print("2 - Check join requests\n");
-                                    System.out.print("3 - Remove member\n");
-                                    System.out.print("4 - Check members\n");
-                                    System.out.print("5 - Return to the Iface main menu\n");
-                                    op_manage = Integer.parseInt(input.nextLine());
-
-                                    correctInput = true;
-                                } catch (Exception e) {
-                                    System.out.print("\nInput isn't a Integer!" + "\n" + "Please, try again:\n\n");
-                                }
-                            }
+                            System.out.print("1 - Add member\n");
+                            System.out.print("2 - Check join requests\n");
+                            System.out.print("3 - Remove member\n");
+                            System.out.print("4 - Check members\n");
+                            System.out.print("5 - Return to the Iface main menu\n");
+                            op_manage = this.readInteger(op_manage);
 
                             if (op_manage == 1) {
                                 System.out.print("Please, enter the new member's nick name: ");
@@ -373,7 +351,7 @@ public class Iface {
                             }
 
                             if (op_manage == 2) {
-                                managing.checkRequests();
+                                managing.checkRequests(this);
                             }
 
                             if (op_manage == 3) {

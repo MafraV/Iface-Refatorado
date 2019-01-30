@@ -25,7 +25,7 @@ public class Community{
 
     public void addMember(Account x){ members.put(x.getNick(), x); }
 
-    public void checkRequests()
+    public void checkRequests(Iface iface)
     {
         if(joinRequests.isEmpty())
         {
@@ -36,25 +36,11 @@ public class Community{
         {
             while(!joinRequests.isEmpty())
             {
-                boolean correctInput = false;
                 int accept = 0;
                 String nick = joinRequests.get(0).getNick();
                 System.out.print(nick + " want to join your community\n");
-
-
-                while(!correctInput)
-                {
-                    try{
-                        System.out.print("Press 1 to accept or 2 to deny\n");
-                        accept = Integer.parseInt(input.nextLine());
-
-                        correctInput = true;
-                    }
-
-                    catch(Exception e){
-                        System.out.print("\nInput isn't a Integer!" + "\n" + "Please, try again:\n\n");
-                    }
-                }
+                System.out.print("Press 1 to accept or 2 to deny\n");
+                accept = iface.readInteger(accept);
 
                 if(accept == 1)
                 {
