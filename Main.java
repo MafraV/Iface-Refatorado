@@ -13,8 +13,8 @@ public class Main {
 
         while (op != 3) {
             System.out.print("What do you want to do?\n");
-            System.out.print("1 - Sing up;\n");
-            System.out.print("2 - Sing in;\n");
+            System.out.print("1 - Sign up;\n");
+            System.out.print("2 - Sign in;\n");
             System.out.print("3 - Turn off the system (Stop Program).\n");
             op = iface.readInteger(op);
 
